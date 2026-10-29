@@ -1,4 +1,4 @@
-public class Stock {
+public class Stock extends Object{
     private String tickerSymbol;
     private long marketCap;
     private double currentRatio;
