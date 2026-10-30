@@ -17,4 +17,8 @@ public interface Shape {
     default void geometryShapes(){
         System.out.println("interface for 2D shapes");
     }
+
+    BigDecimal calculateVolume();
+
+    BigDecimal calculateSurfaceArea();
 }

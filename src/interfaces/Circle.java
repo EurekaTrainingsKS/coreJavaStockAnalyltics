@@ -2,10 +2,10 @@ package interfaces;
 
 import java.math.BigDecimal;
 
-public class Cricle implements Shape{
+public class Circle implements Shape{
     private BigDecimal radius;
 
-    public Cricle(BigDecimal radius) {
+    public Circle(BigDecimal radius) {
         this.radius = radius;
     }
 
