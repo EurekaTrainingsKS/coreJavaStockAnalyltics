@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Stock extends Object{
     private String tickerSymbol;
     private long marketCap;
@@ -30,8 +32,32 @@ public class Stock extends Object{
         this.currentRatio = currentRatio;
     }
 
+    public Stock(String tickerSymbol) {
+        this.tickerSymbol = tickerSymbol;
+    }
+
     public Stock() {
 
+    }
+
+    /**
+     * how we compare objects,
+     * for basic, String or Num we can dirrectly compare these values.
+     * but for Objects we have multiple Parameters for Stock, tikcerSymbol, sectorId and soo...
+     * so compare stock objects, we should tell java, take this specific param, by overriding equals method
+     * if not by default just the hashCode of the Objects
+     * @param o   the reference object with which to compare.
+     * @return
+     */
+    @Override
+    public boolean equals(Object o) {
+       if(this.tickerSymbol == tickerSymbol) return true;
+       else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tickerSymbol, marketCap, currentRatio, sectorId, subSectorId);
     }
 
     @Override
