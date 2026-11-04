@@ -117,4 +117,33 @@ public class Stock extends Object{
     public void setTickerSymbol(String tickerSymbol) {
         this.tickerSymbol = tickerSymbol;
     }
+    public static void main(String[] args) {
+        // These are sample values for practice.
+        Stock tesla = new Stock(1, 1, "TSLA", 1000000L, 2.5);
+
+        Stock amazon = new Stock("AMZN");
+        amazon.setSectorId(2);
+        amazon.setSubSectorId(1);
+        amazon.setMarketCap(2000000L);
+        amazon.setCurrentRatio(1.8);
+
+        Stock microsoft = new Stock();
+        microsoft.setTickerSymbol("MSFT");
+        microsoft.setSectorId(3);
+        microsoft.setSubSectorId(1);
+        microsoft.setMarketCap(3000000L);
+        microsoft.setCurrentRatio(2.0);
+
+        Stock amd = new Stock(3, 2, "AMD", 500000L, 1.5);
+
+        System.out.println(tesla);
+        System.out.println(amazon);
+        System.out.println(microsoft);
+        System.out.println(amd);
+
+        System.out.println("Tesla ticker: " + tesla.getTickerSymbol());
+
+        amd.setCurrentRatio(2.2);
+        System.out.println("Updated AMD ratio: " + amd.getCurrentRatio());
+    }
 }
