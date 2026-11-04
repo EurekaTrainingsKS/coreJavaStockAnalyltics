@@ -1,3 +1,5 @@
+import java.lang.Object;
+
 public class Stock {
     private String tickerSymbol;
     private long marketCap;
@@ -33,6 +35,18 @@ public class Stock {
     public Stock() {
 
     }
+
+    public Stock(String tickerSymbol) {
+        this.tickerSymbol = tickerSymbol;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this.tickerSymbol == tickerSymbol) return true;
+        else return false;
+    }
+
 
     @Override
     public String toString() {
@@ -90,5 +104,12 @@ public class Stock {
 
     public void setTickerSymbol(String tickerSymbol) {
         this.tickerSymbol = tickerSymbol;
+    }
+
+    public void setSubsectorId(int i) {
+    }
+
+    public void setMarketcap(int i) {
+
     }
 }
