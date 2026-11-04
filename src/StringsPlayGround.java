@@ -34,6 +34,40 @@ public class StringsPlayGround {
         System.out.println(fname.charAt(2));
 
         //practise all the String methods form String Class.
+        System.out.println("--- My string practice ---");
+
+        String message = "Learning Java";
+
+        System.out.println("Length: " + message.length());
+        System.out.println("Uppercase: " + message.toUpperCase());
+        System.out.println("Lowercase: " + message.toLowerCase());
+
+        System.out.println("First character: " + message.charAt(0));
+        System.out.println("First word: " + message.substring(0, 8));
+        System.out.println("Contains Java: " + message.contains("Java"));
+        System.out.println("Position of Java: " + message.indexOf("Java"));
+
+        System.out.println("Starts with Learning: " + message.startsWith("Learning"));
+        System.out.println("Ends with Java: " + message.endsWith("Java"));
+        System.out.println("Replace: " + message.replace("Java", "Python"));
+
+        String ticker = "TSLA";
+        System.out.println("Exact match: " + ticker.equals("tsla"));
+        System.out.println("Ignore case: " + ticker.equalsIgnoreCase("tsla"));
+
+        String spaces = "   ";
+        System.out.println("Spaces are empty: " + spaces.isEmpty());
+        System.out.println("Spaces are blank: " + spaces.isBlank());
+
+        String paddedTicker = "  MSFT  ";
+        System.out.println("Trimmed: [" + paddedTicker.trim() + "]");
+
+        String stocks = "TSLA,AMZN,MSFT,AMD";
+        String[] symbols = stocks.split(",");
+        System.out.println("Split tickers: " + Arrays.toString(symbols));
+
+// String methods return results without changing the original string.
+        System.out.println("Original message: " + message);
 
     }
 }
