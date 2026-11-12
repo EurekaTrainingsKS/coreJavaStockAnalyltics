@@ -1,4 +1,5 @@
 import eurekaAccounts.VO.SectorVO;
+import eurekaAccounts.VO.SubSectorVO;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -27,7 +28,33 @@ public class JDBCPlayGround {
                 settings.getProperty("jdbc.user"),
                 settings.getProperty("jdbc.password"))) {
             getAllSectors(connection);
+            getAllSubSectors(connection);
         }
+    }
+
+    private static void getAllSubSectors(Connection connection) throws SQLException {
+        String sqlQuery = """
+                SELECT subsector_id, subsector_name, sector_id
+                FROM endeavour.subsector_lookup
+                ORDER BY subsector_id
+                """;
+
+        ArrayList<SubSectorVO> allSubSectors = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
+            statement.setQueryTimeout(15);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    SubSectorVO subSector = new SubSectorVO();
+                    subSector.setSubSectorId(resultSet.getInt("subsector_id"));
+                    subSector.setSubSectorName(resultSet.getString("subsector_name"));
+                    // Integer preserves SQL NULL when a parent sector is absent.
+                    subSector.setSectorId(resultSet.getObject("sector_id", Integer.class));
+                    allSubSectors.add(subSector);
+                }
+            }
+        }
+        System.out.println("Subsectors retrieved: " + allSubSectors.size());
+        System.out.println(allSubSectors);
     }
 
     private static void getAllSectors(Connection connection) throws SQLException {
