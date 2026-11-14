@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class JDBCPlayGround {
-    private static String jdbcURL = "postgresql://endeavourtech.ddns.net:50271/StocksDB";
+    private static String jdbcURL = "jdbc:postgresql://endeavourtech.ddns.net:50271/StocksDB";
     private static String userName = "evr_sql_app";
     private static String password = "5LViU5pLkSjRHECec9NF4wRxxV";
     public static void main(String[] args) throws SQLException {
