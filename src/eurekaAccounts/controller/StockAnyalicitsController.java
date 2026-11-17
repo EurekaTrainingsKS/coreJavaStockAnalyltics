@@ -1,8 +1,10 @@
 package eurekaAccounts.controller;
 
+import eurekaAccounts.VO.StockFundamentalsVO;
 import eurekaAccounts.service.StockAnyaliticsService;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class StockAnyalicitsController {
@@ -28,7 +30,15 @@ public class StockAnyalicitsController {
         tickerList.add("TSLA");
         tickerList.add("NVDA");
 
-        System.out.println(allSectorsService.getStockFundamentals(tickerList));
+        //System.out.println(allSectorsService.getStockFundamentals(tickerList));
+
+        //Req getAllStockFundamentals
+        ArrayList<StockFundamentalsVO> allStockFundamentals = allSectorsService.getAllStockFundamentals();
+        //System.out.println(allStockFundamentals);
+
+        //Req: get All Health care stocks,
+        List<StockFundamentalsVO> healthCareStocks = allSectorsService.getHealthCareStocks();
+        System.out.println(healthCareStocks);
 
 
     }

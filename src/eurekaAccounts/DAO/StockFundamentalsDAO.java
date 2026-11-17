@@ -9,7 +9,36 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class StockFundamentalsDAO extends BaseDAO{
-    public ArrayList<StockFundamentalsVO> getStockFundamentals(ArrayList<String> tickerList) {
+
+    public ArrayList<StockFundamentalsVO> getAllStockFundamentals() {
+        String sqlQurey = """
+                select 
+                    *
+                    from
+                        endeavour.stock_fundamentals sf 
+                """;
+        try {
+            PreparedStatement preparedStatement = jdbcConnection.prepareStatement(String.valueOf(sqlQurey));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ArrayList<StockFundamentalsVO> allStocks = new ArrayList<>();
+            while (resultSet.next()) {
+                StockFundamentalsVO stockFundamentalsVO = new StockFundamentalsVO();
+                stockFundamentalsVO.setTickerSymbol(resultSet.getString("ticker_symbol"));
+                stockFundamentalsVO.setSectorId(resultSet.getInt("sector_id"));
+                stockFundamentalsVO.setSubSectorId(resultSet.getInt("subsector_id"));
+                stockFundamentalsVO.setMarketCap(resultSet.getBigDecimal("market_cap"));
+                stockFundamentalsVO.setCurrentRatio(resultSet.getBigDecimal("current_ratio"));
+                allStocks.add(stockFundamentalsVO);
+            }
+            return allStocks;
+        }catch (SQLException e){
+            System.out.println("failed to connect SectorLookUp table :"+e);
+        }
+        return null;
+    }
+
+
+        public ArrayList<StockFundamentalsVO> getStockFundamentals(ArrayList<String> tickerList) {
         String sqlQurey = """
                 select 
                     *
