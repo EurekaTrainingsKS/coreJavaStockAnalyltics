@@ -1,6 +1,8 @@
 package eurekaAccounts.service;
 
 import eurekaAccounts.DAO.SectorLookUpDAO;
+import eurekaAccounts.DAO.CompanyLocationDAO;
+import eurekaAccounts.VO.CompanyLocationVO;
 import eurekaAccounts.DAO.StockFundamentalsDAO;
 import eurekaAccounts.DAO.StockLookUpDAO;
 import eurekaAccounts.VO.SectorVO;
@@ -16,6 +18,32 @@ import java.util.Objects;
 // Name follows the classroom reference so its examples remain recognizable.
 public class StockAnyaliticsService {
     private final SectorLookUpDAO sectorLookUpDAO = new SectorLookUpDAO();
+    private final CompanyLocationDAO companyLocationDAO = new CompanyLocationDAO();
+
+    public List<CompanyLocationVO> getCompanyLocations(List<String> tickers) throws SQLException {
+        return companyLocationDAO.getCompanyLocations(tickers);
+    }
+
+    public List<StockFundamentalsVO> getAllITStocks() throws SQLException {
+        // The class database calls the IT sector Technology.
+        int technologySectorId = getAllSectorsService().stream()
+                .filter(sector -> "Technology".equalsIgnoreCase(sector.getSectorName()))
+                .mapToInt(SectorVO::getSectorId)
+                .findFirst()
+                .orElseThrow(() -> new SQLException("Technology sector was not found."));
+        List<StockFundamentalsVO> itStocks = getAllStockFundamentals().stream()
+                .filter(stock -> Objects.equals(stock.getSectorId(), technologySectorId))
+                .sorted(Comparator.comparing(StockFundamentalsVO::getMarketCap,
+                        Comparator.nullsLast(Comparator.reverseOrder())))
+                .toList();
+        BigDecimal totalMarketCap = itStocks.stream()
+                .map(StockFundamentalsVO::getMarketCap)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        System.out.println("IT stock count: " + itStocks.size());
+        System.out.println("Total known IT market cap: " + totalMarketCap.toPlainString());
+        return itStocks;
+    }
     private final StockLookUpDAO stockLookUpDAO = new StockLookUpDAO();
     private final StockFundamentalsDAO stockFundamentalsDAO = new StockFundamentalsDAO();
 

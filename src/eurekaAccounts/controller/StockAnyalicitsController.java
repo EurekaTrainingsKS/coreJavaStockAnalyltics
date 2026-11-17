@@ -19,5 +19,11 @@ public class StockAnyalicitsController {
         System.out.println("Selected fundamentals: " + service.getStockFundamentals(tickers));
         System.out.println("All fundamentals count: " + service.getAllStockFundamentals().size());
         System.out.println("Healthcare stocks by market cap: " + service.getHealthCareStocks());
+
+        System.out.println("Company locations for AAPL, TSLA, NVDA:");
+        service.getCompanyLocations(tickers).forEach(System.out::println);
+
+        System.out.println("IT stocks in descending market-cap order:");
+        service.getAllITStocks().forEach(System.out::println);
     }
 }
