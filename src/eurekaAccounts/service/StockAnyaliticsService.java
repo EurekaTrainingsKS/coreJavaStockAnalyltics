@@ -11,6 +11,8 @@ import eurekaAccounts.VO.StocksVO;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class StockAnyaliticsService {
     public StockAnyaliticsService() {
@@ -41,5 +43,33 @@ public class StockAnyaliticsService {
 
     public ArrayList<CompanyLocationVO> getCompanyLocations(ArrayList<String> tickerList) {
         return companyLocationDAO.getCompanyLocations(tickerList);
+    }
+
+    public ArrayList<StockFundamentalsVO> getAllStockFundamentals() {
+        ArrayList<StockFundamentalsVO>  allStockFundamentals = stockFundamentalsDAO.getAllStockFundamentals();
+        return allStockFundamentals;
+    }
+
+    public <StockFundamentalsVo> List<StockFundamentalsVo> getHealthCareStocks() {
+        ArrayList<StockFundamentalsVO> allStockFundamentals = stockFundamentalsDAO.getAllStockFundamentals();
+        List<StockFundamentalsVO> healthCareStockOnly
+                = allStockFundamentals.stream()
+                .filter(stock -> stock.getSectorId() == 34)
+                .toList();
+        long totalNumOfHealthCareStocks
+                = allStockFundamentals.stream()
+                .filter(stock -> stock.getSectorId() == 34)
+                .count();
+
+        return (List<StockFundamentalsVo>) healthCareStockOnly;
+    }
+
+    // IT = Technology sector (sector_id 37), sorted by market cap, biggest first
+    public List<StockFundamentalsVO> getAllITStocks() {
+        ArrayList<StockFundamentalsVO> allStockFundamentals = stockFundamentalsDAO.getAllStockFundamentals();
+        return allStockFundamentals.stream()
+                .filter(stock -> stock.getSectorId() == 37)
+                .sorted(Comparator.comparing(StockFundamentalsVO::getMarketCap).reversed())
+                .toList();
     }
 }
