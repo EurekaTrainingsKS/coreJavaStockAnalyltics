@@ -3,11 +3,15 @@ package eurekaAccounts.service;
 import eurekaAccounts.DAO.SectorLookUpDAO;
 import eurekaAccounts.DAO.StockFundamentalsDAO;
 import eurekaAccounts.DAO.StockLookUpDAO;
+import eurekaAccounts.DAO.StockPriceHistoryDAO;
 import eurekaAccounts.VO.SectorVO;
 import eurekaAccounts.VO.StockFundamentalsVO;
+import eurekaAccounts.VO.StockPriceHistoryVO;
 import eurekaAccounts.VO.StocksVO;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -19,6 +23,7 @@ public class StockAnyaliticsService {
     SectorLookUpDAO sectorLookUpDAO = new SectorLookUpDAO();
     StockLookUpDAO stockLookUpDAO = new StockLookUpDAO();
     StockFundamentalsDAO stockFundamentalsDAO = new StockFundamentalsDAO();
+    StockPriceHistoryDAO stockPriceHistoryDAO = new StockPriceHistoryDAO();
 
     public ArrayList<SectorVO> getAllSectorsService() {
         return sectorLookUpDAO.getAllSectorsDAO();
@@ -71,5 +76,9 @@ public class StockAnyaliticsService {
         System.out.println("Total sum of all healthCareStocks is :"+reduce);
 
         return healthCareStocksByMarketCap;
+    }
+
+    public ArrayList<StockPriceHistoryVO> getSpecificStockHistory(String tsla, LocalDate fromDate, LocalDate toDate) throws SQLException {
+       return stockPriceHistoryDAO.getSpecificStockHistory(tsla,fromDate,toDate);
     }
 }
