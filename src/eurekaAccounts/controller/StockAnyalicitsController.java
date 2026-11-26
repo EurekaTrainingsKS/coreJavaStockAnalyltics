@@ -2,6 +2,7 @@ package eurekaAccounts.controller;
 
 import eurekaAccounts.service.StockAnyaliticsService;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,5 +26,10 @@ public class StockAnyalicitsController {
 
         System.out.println("IT stocks in descending market-cap order:");
         service.getAllITStocks().forEach(System.out::println);
+
+        LocalDate fromDate = LocalDate.parse("2024-01-01");
+        LocalDate toDate = LocalDate.parse("2024-01-10");
+        System.out.println("TSLA price history from " + fromDate + " to " + toDate + ":");
+        service.getSpecificStockHistory("TSLA", fromDate, toDate).forEach(System.out::println);
     }
 }

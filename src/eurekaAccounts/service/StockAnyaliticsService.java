@@ -1,6 +1,9 @@
 package eurekaAccounts.service;
 
 import eurekaAccounts.DAO.SectorLookUpDAO;
+import eurekaAccounts.DAO.StockPriceHistoryDAO;
+import eurekaAccounts.VO.StockPriceHistoryVO;
+import java.time.LocalDate;
 import eurekaAccounts.DAO.CompanyLocationDAO;
 import eurekaAccounts.VO.CompanyLocationVO;
 import eurekaAccounts.DAO.StockFundamentalsDAO;
@@ -18,6 +21,12 @@ import java.util.Objects;
 // Name follows the classroom reference so its examples remain recognizable.
 public class StockAnyaliticsService {
     private final SectorLookUpDAO sectorLookUpDAO = new SectorLookUpDAO();
+    private final StockPriceHistoryDAO stockPriceHistoryDAO = new StockPriceHistoryDAO();
+
+    public ArrayList<StockPriceHistoryVO> getSpecificStockHistory(
+            String tickerSymbol, LocalDate fromDate, LocalDate toDate) throws SQLException {
+        return stockPriceHistoryDAO.getSpecificStockHistory(tickerSymbol, fromDate, toDate);
+    }
     private final CompanyLocationDAO companyLocationDAO = new CompanyLocationDAO();
 
     public List<CompanyLocationVO> getCompanyLocations(List<String> tickers) throws SQLException {
